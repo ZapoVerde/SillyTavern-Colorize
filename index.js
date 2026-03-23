@@ -760,19 +760,48 @@ function registerKeybind() {
  * @description
  * Runs once on extension load via jQuery's DOM-ready callback. Restores any
  * previously confirmed CSS silently (no revert timer — user already confirmed
- * it in a prior session), registers the keybind, and wires up the settings
- * panel buttons that ST injects from settings.html.
+ * it in a prior session), registers the keybind, injects the settings panel,
+ * and wires up its buttons.
  * @core-principles
  *   1. Silent re-injection on load — no revert timer for previously confirmed CSS.
  *   2. If Storage.load() returns null, nothing is injected and ST loads normally.
  *   3. Sets the scoping attribute on <html> before injecting so the first
  *      paint already has the attribute in place.
  * @api-declaration
- *   init() (implicit — runs in jQuery ready)
+ *   init() (implicit — runs in jQuery ready), injectSettingsPanel()
  * @contract
  *   assertions:
- *     external_io: [document.documentElement, ST extensions panel DOM]
+ *     external_io: [document.documentElement, #extensions_settings DOM]
  */
+
+function injectSettingsPanel() {
+    if ($('#colorize-settings-block').length) return;
+    $('#extensions_settings').append(`
+<div id="colorize-settings-block" class="inline-drawer">
+    <div class="inline-drawer-toggle inline-drawer-header">
+        <b>Colorize</b>
+        <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+    </div>
+    <div class="inline-drawer-content" style="display:none">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 4px">
+            <button id="colorize-open-editor-btn" class="menu_button" title="Open the floating CSS editor">
+                <i class="fa-solid fa-paintbrush"></i> CSS Editor
+            </button>
+            <button id="colorize-bypass-settings-btn" class="menu_button" title="Toggle CSS on/off without clearing storage (Ctrl+Shift+B)">
+                <i class="fa-solid fa-toggle-off"></i> Bypass: OFF
+            </button>
+            <button id="colorize-strip-btn" class="menu_button" title="Remove all Colorize CSS and clear storage">
+                <i class="fa-solid fa-eraser"></i> Strip CSS
+            </button>
+        </div>
+        <small style="display:block;margin-top:6px;opacity:0.55;font-size:11px">
+            Strip: <kbd>Ctrl+Shift+0</kbd>
+            &nbsp;&nbsp;
+            Bypass: <kbd>Ctrl+Shift+B</kbd>
+        </small>
+    </div>
+</div>`);
+}
 
 jQuery(async () => {
     // ── Init settings ─────────────────────────────────────────────────────────
@@ -801,7 +830,10 @@ jQuery(async () => {
     // ── Register emergency keybind ────────────────────────────────────────────
     registerKeybind();
 
-    // ── Wire settings panel buttons (injected by ST from settings.html) ───────
+    // ── Inject settings panel into ST Extensions drawer ───────────────────────
+    injectSettingsPanel();
+
+    // ── Wire settings panel buttons ───────────────────────────────────────────
     $('#colorize-open-editor-btn').on('click', toggleEditor);
 
     $('#colorize-bypass-settings-btn').on('click', () => {
