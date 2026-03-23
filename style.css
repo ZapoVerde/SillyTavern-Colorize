@@ -1,0 +1,237 @@
+/* =============================================================================
+   Colorize — editor panel styles
+   These style the extension's own UI only.
+   The user's custom CSS lives in localStorage and is injected via <style>.
+   ============================================================================= */
+
+/* ── Editor panel container ─────────────────────────────────────────────────── */
+
+#colorize-editor {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 560px;
+    max-height: 85vh;
+    z-index: 2147483646; /* one below the revert bar */
+    background: #141428;
+    border: 1px solid #3a3a5a;
+    border-radius: 10px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: #dde;
+    overflow: hidden;
+    /* Prevent user CSS from collapsing it */
+    min-width: 320px;
+    min-height: 200px;
+}
+
+/* ── Header / drag handle ────────────────────────────────────────────────────── */
+
+.colorize-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #0e0e20;
+    border-bottom: 1px solid #2e2e4a;
+    border-radius: 10px 10px 0 0;
+    cursor: grab;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.colorize-header:active {
+    cursor: grabbing;
+}
+
+.colorize-title {
+    font-weight: bold;
+    font-size: 13px;
+    color: #ffd700;
+    letter-spacing: 0.03em;
+}
+
+.colorize-close-btn {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.colorize-close-btn:hover {
+    color: #fff;
+    background: #3a3a5a;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────────────────── */
+
+.colorize-toolbar {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #2e2e4a;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.colorize-spacer {
+    flex: 1;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────────── */
+
+.colorize-btn {
+    background: #252545;
+    color: #dde;
+    border: 1px solid #4a4a6a;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font: 12px 'Consolas', 'Monaco', monospace;
+    white-space: nowrap;
+    transition: background 0.12s;
+}
+
+.colorize-btn:hover {
+    background: #333360;
+}
+
+.colorize-btn-primary {
+    background: #1e4d8c;
+    border-color: #3a6eb0;
+    color: #fff;
+}
+
+.colorize-btn-primary:hover {
+    background: #2a5fa8;
+}
+
+.colorize-btn-danger {
+    background: #5a2020;
+    border-color: #8e3a3a;
+    color: #ffb3b3;
+}
+
+.colorize-btn-danger:hover {
+    background: #7a2a2a;
+}
+
+/* ── Live-preview / duration row ─────────────────────────────────────────────── */
+
+.colorize-options-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 12px;
+    border-bottom: 1px solid #2e2e4a;
+    font-size: 12px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.colorize-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.colorize-dur-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    white-space: nowrap;
+    opacity: 0.8;
+}
+
+#colorize-dur-slider {
+    width: 90px;
+    accent-color: #4a7ab0;
+}
+
+/* ── Textarea ────────────────────────────────────────────────────────────────── */
+
+#colorize-textarea {
+    flex: 1;
+    min-height: 180px;
+    background: #09090f;
+    color: #a8d8a8;
+    border: none;
+    border-bottom: 1px solid #2e2e4a;
+    padding: 12px 14px;
+    font: 13px/1.6 'Consolas', 'Monaco', monospace;
+    outline: none;
+    tab-size: 2;
+    overflow-y: auto;
+}
+
+#colorize-textarea::placeholder {
+    color: #333350;
+}
+
+/* ── Template row ────────────────────────────────────────────────────────────── */
+
+.colorize-template-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-bottom: 1px solid #2e2e4a;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.colorize-template-row label {
+    white-space: nowrap;
+    opacity: 0.8;
+}
+
+.colorize-select {
+    flex: 1;
+    background: #0e0e20;
+    color: #dde;
+    border: 1px solid #4a4a6a;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font: 12px 'Consolas', 'Monaco', monospace;
+    cursor: pointer;
+    outline: none;
+    min-width: 0;
+}
+
+.colorize-select:focus {
+    border-color: #6a6aaa;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────────── */
+
+.colorize-footer {
+    padding: 6px 14px;
+    font-size: 11px;
+    color: #555570;
+    border-radius: 0 0 10px 10px;
+    background: #0e0e20;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+/* Shared kbd style — covers both the editor footer and the settings panel */
+.colorize-footer kbd,
+#colorize-settings-block kbd {
+    background: #252545;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font: 10px monospace;
+    border: 1px solid #4a4a6a;
+    color: #9090b0;
+}

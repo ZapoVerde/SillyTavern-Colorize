@@ -1,0 +1,12 @@
+{
+    "display_name": "Colorize",
+    "loading_order": 5,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "settings": "settings.html",
+    "author": "ZapoVerde",
+    "version": "0.1.0",
+    "auto_update": false
+}
