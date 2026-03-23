@@ -1,7 +1,7 @@
 /**
  * @file data/default-user/extensions/colorize/index.js
  * @stamp {"utc":"2026-03-23T00:00:00.000Z"}
- * @version 0.1.3
+ * @version 0.1.4
  * @architectural-role Feature Entry Point
  * @description
  * Colorize — a SillyTavern extension providing complete, safe CSS control
@@ -182,6 +182,55 @@ body, .mes_text, .mes_block {
 em, b, strong {
     color: #ffff88 !important;
 }`,
+
+    'Clean White': `/* ── Colorize: Clean White ───────────────────────────────────────────────
+   Light, minimal UI. White backgrounds, soft borders, dark readable text.
+   ─────────────────────────────────────────────────────────────────── */
+
+/* ── Page & chat backgrounds ──────────────────────────────────────────── */
+:root {
+    --SmartThemeBodyColor:      #f8f9fa;
+    --SmartThemeChatBackground: #ffffff;
+    --SmartThemeBotMesColor:    #ffffff;
+    --SmartThemeUserMesColor:   #f0f4ff;
+    --SmartThemeBorderColor:    rgba(0, 0, 0, 0.08);
+    --SmartThemeBlurStrength:   0px;
+}
+
+/* ── Global text colour ────────────────────────────────────────────────── */
+body,
+.mes_text,
+.mes_block,
+textarea,
+select,
+input {
+    color: #1f1f1f !important;
+}
+
+/* ── Message bubbles ───────────────────────────────────────────────────── */
+.mes {
+    border-radius: 12px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    margin-bottom: 10px !important;
+    padding: 14px 16px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ── Send bar ──────────────────────────────────────────────────────────── */
+#send_form,
+#send_textarea {
+    background: #ffffff !important;
+    border: 1px solid #dadce0 !important;
+    border-radius: 12px !important;
+    color: #1f1f1f !important;
+}
+
+/* ── Top nav ───────────────────────────────────────────────────────────── */
+#top-bar {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+}`,
 };
 
 // ─── Module-level state ───────────────────────────────────────────────────────
@@ -223,7 +272,7 @@ function injectCss(cssText) {
         el.id = STYLE_TAG_ID;
         document.head.appendChild(el);
     }
-    el.textContent = cssText;
+    el.innerHTML = cssText;
     el.disabled = false;    // applying always clears bypass
     _bypassed   = false;
     document.documentElement.setAttribute(SCOPE_ATTR, '1');
@@ -241,7 +290,7 @@ function stripCss() {
 /** Returns the currently injected CSS text, or '' if nothing is injected. */
 function snapshotCss() {
     const el = document.getElementById(STYLE_TAG_ID);
-    return el ? el.textContent : '';
+    return el ? el.innerHTML : '';
 }
 
 // =============================================================================
