@@ -1,7 +1,7 @@
 /**
  * @file data/default-user/extensions/colorize/index.js
  * @stamp {"utc":"2026-03-23T00:00:00.000Z"}
- * @version 0.1.4
+ * @version 0.1.5
  * @architectural-role Feature Entry Point
  * @description
  * Colorize — a SillyTavern extension providing complete, safe CSS control
@@ -429,6 +429,7 @@ function startRevertTimer(previousCss) {
 
     const currentCss = snapshotCss();
     const durationMs = (extension_settings[EXT_NAME]?.revertDuration) ?? DEFAULT_REVERT_DURATION_MS;
+    console.log(`[Colorize] Revert timer started. Duration: ${durationMs}ms. Will revert to ${previousCss.length} chars of CSS if not confirmed.`);
     let remaining = Math.ceil(durationMs / 1000);
 
     // ── Build bar (inline styles only — immune to user CSS) ──────────────────
@@ -464,6 +465,7 @@ function startRevertTimer(previousCss) {
     _revertTimer = setTimeout(() => {
         clearInterval(tick);
         _removeBar();
+        console.log('[Colorize] Revert timer expired — restoring previous CSS.');
         previousCss ? injectCss(previousCss) : stripCss();
         syncEditorTextarea();
     }, durationMs);
@@ -641,6 +643,7 @@ function _buildEditorEl() {
     el.querySelector('#colorize-apply-btn').addEventListener('click', () => {
         const css  = el.querySelector('#colorize-textarea').value;
         const prev = snapshotCss();
+        console.log('[Colorize] Apply clicked. CSS length:', css.length, 'chars. Previous snapshot length:', prev.length, 'chars.');
         injectCss(css);
         startRevertTimer(prev);
     });
