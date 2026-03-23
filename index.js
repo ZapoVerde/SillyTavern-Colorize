@@ -1,7 +1,7 @@
 /**
  * @file data/default-user/extensions/colorize/index.js
  * @stamp {"utc":"2026-03-23T00:00:00.000Z"}
- * @version 0.1.2
+ * @version 0.1.3
  * @architectural-role Feature Entry Point
  * @description
  * Colorize — a SillyTavern extension providing complete, safe CSS control
